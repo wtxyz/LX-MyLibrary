@@ -96,7 +96,7 @@ int main() {
 
 	// 生成一个新的Item
 	BookItem* newItem = new BookItem;
-	strcpy(newItem->ISBN, "1208");
+	strcpy(newItem->ISBN, "1234");
 	strcpy(newItem->name, "My Book");
 	newItem->price = 12.0;
 	newItem->next = nullptr;
@@ -107,7 +107,7 @@ int main() {
 	pCursor = newItem;
 
 	BookItem* newItem2 = new BookItem;
-	strcpy(newItem2->ISBN, "0601");
+	strcpy(newItem2->ISBN, "1233");
 	strcpy(newItem2->name, "Your Book");
 	newItem2->price = 12.0;
 	newItem2->next = nullptr;
@@ -145,20 +145,48 @@ int main() {
 
 
 	//************************ 删除（按照ISBN）START*******************************************
-	char input_delete[1000] = { 0 };
-	Console::setColor(RedFore);
-	std::cout << "Please input ISBN to DELETE! : ";
-	Console::setColor();
-	scanf("%s", input_delete);
-	delete_item_by_ISBN(pBooks->next, input_delete);
+	if (0) {
+		char input_delete[1000] = { 0 };
+		Console::setColor(RedFore);
+		std::cout << "Please input ISBN to DELETE! : ";
+		Console::setColor();
+		scanf("%s", input_delete);
+		delete_item_by_ISBN(pBooks->next, input_delete);
 
-	Console::setColor(RedFore);
-	std::cout << "Please input ISBN to DELETE! : ";
-	Console::setColor();
-	scanf("%s", input_delete);
-	delete_item_by_ISBN(pBooks->next, input_delete);
+		Console::setColor(RedFore);
+		std::cout << "Please input ISBN to DELETE! : ";
+		Console::setColor();
+		scanf("%s", input_delete);
+		delete_item_by_ISBN(pBooks->next, input_delete);
+	}
+
 
 	//************************ 删除（按照ISBN）END*******************************************
+
+
+	//************************ 修改（按照ISBN）START*******************************************
+	// 找到ISBN -> 修改价格
+	char input_modify[100] = { 0 };
+	Console::setColor(FuchsiaFore);
+	std::cout << "Please input ISBN to find the Book: ";
+	Console::setColor();
+	std::cin >> input_modify;
+	BookItem* pModifyCursor = pBooks;
+	while (pModifyCursor != nullptr) {
+		if (strcmp(pModifyCursor->ISBN, input_modify) == 0) {
+			Console::setColor(YellowFore);
+			std::cout << "Please input anew price for " << pModifyCursor->name << ": ";
+			Console::setColor();
+			float new_price = 0.0;
+			scanf("%f", &new_price);
+			pModifyCursor->price = new_price;
+		}
+
+		pModifyCursor = pModifyCursor->next;
+	}
+
+
+	//************************ 修改（按照ISBN）END*******************************************
 
 	print_list(pBooks->next);
 
