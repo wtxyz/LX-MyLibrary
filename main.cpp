@@ -94,36 +94,24 @@ int main() {
 	// [x] <=== pCursor
 	BookItem* pCursor = pBooks;
 
-	// 生成一个新的Item
-	BookItem* newItem = new BookItem;
-	strcpy(newItem->ISBN, "1234");
-	strcpy(newItem->name, "My Book");
-	newItem->price = 12.0;
-	newItem->next = nullptr;
+	BookItem* pInsertCursor = pBooks->next;
+	char input_insert[1000] = { 0 };
+	std::cout << "Please input ISBN Name Price:";
+	char ISBN[20] = { 0 };
+	char name[30] = { 0 };
+	float price = 0.0;
+	scanf("%s %s %f", &ISBN, &name, &price);
 
-	// 将新建的值插入到列表的下一项
-	newItem->front = pCursor;//Add it to Support bi-sides.
-	pCursor->next = newItem;
-	pCursor = newItem;
-
-	BookItem* newItem2 = new BookItem;
-	strcpy(newItem2->ISBN, "1233");
-	strcpy(newItem2->name, "Your Book");
-	newItem2->price = 12.0;
-	newItem2->next = nullptr;
-
-	// 将当前指针移动到最新的项上，如
-	// [x]->[A]->[B]->[C]....
-	//       ^pCursor
-	// 
-	// Cursor is moving to newest item.
-	newItem2->front = pCursor;
-	pCursor->next = newItem2;
-	pCursor = newItem2;
+	BookItem* pnew = new BookItem;
+	strcpy(pnew->ISBN, ISBN);
+	strcpy(pnew->name, name);
+	pnew->price = price;
+	pnew->next = nullptr;
+	pnew->front = pCursor;
+	pCursor->next = pnew;
 
 	print_list(pBooks->next);
 
-	std::cout << std::endl;
 
 	//************************ 查找（按照ISBN）START*******************************************
 
@@ -192,3 +180,4 @@ int main() {
 
 	return 0;
 }
+
